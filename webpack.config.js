@@ -1,58 +1,27 @@
 var path = require('path');
 var webpack = require('webpack');
 
-
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
-  entry: {
-    main: [
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './src/index'
-    ]
-  },
+  devtool: 'eval',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/index'
+  ],
   output: {
-    path: path.join(__dirname, 'static'),
+    path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/assets/',
+    publicPath: '/static/'
   },
-  resolve: {
-    extensions: ['', '.js'],
-    root: path.join(__dirname, 'src'),
-    modulesDirectories: ['node_modules'],
-    alias: {
-      app: path.join(__dirname,'src')
-    }
-  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        presets: ['react-hmre']
-      }
-    },
-    {
-      test: /\.(scss|sass)$/,
-      loader: 'style-loader!css-loader!sass-loader?sourceMap'
-    }],
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: "eslint-loader",
-        include: './src'
-      },
-    ],
-  },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('development')
-      }
-    })
-  ]
-
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src')
+    }]
+  }
 };

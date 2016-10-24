@@ -1,16 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { applyMiddleware, createStore } from 'redux'
-import { Provider } from 'react-redux'
-import { Router, browserHistory, Route } from 'react-router'
-import App from './components/app-container'
-import routes from './components/app-routes'
-import reducers from './reducers'
-
-const createStoreWithMiddleware = applyMiddleware()(createStore)
+import App from './components/app'
+import { AppContainer } from 'react-hot-loader'
+const MOUNT_NODE = document.getElementById('root')
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={browserHistory} routes={routes} />
-  </Provider>
-  , document.querySelector('.container'))
+  <AppContainer>
+    <App />
+  </AppContainer>,
+  MOUNT_NODE);
+
+if(module.hot) {
+  require('./utils/dev-hot-load-utils');
+}

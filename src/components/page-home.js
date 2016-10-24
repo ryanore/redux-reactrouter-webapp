@@ -2,6 +2,6 @@ import React from 'react'
 
 export default Home  => (
   <div>
-    Home
+    Homeasdfasdf
   </div>
 )
