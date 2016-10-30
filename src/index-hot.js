@@ -1,19 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import RootApp from './components/app'
 import { AppContainer } from 'react-hot-loader'
+import { Provider } from 'react-redux'
 import createStore from './store'
+import RootApp from './containers/app'
 
-const MOUNT_NODE = document.getElementById('root')
 const initialState = window.___INITIAL_STATE__
 const store = createStore(initialState)
 
 const renderApp = (App) => {
   ReactDOM.render(
     <AppContainer>
-      <App store={store} />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </AppContainer>,
-    MOUNT_NODE
+    document.getElementById('root')
   )
 }
 
@@ -23,8 +25,8 @@ if(module.hot) {
   require('./utils/react-router-error-suppress').default()
 
   // enable hot-reloader on app
-  module.hot.accept("./components/app", () => {
-    const NextApp = require("./components/app").default
+  module.hot.accept("./containers/app", () => {
+    const NextApp = require("./containers/app").default
     renderApp(NextApp)
   });
 

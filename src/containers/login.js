@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default Home => (
+export default About  => (
   <div>
-    Home.
+    Log In
   </div>
 )

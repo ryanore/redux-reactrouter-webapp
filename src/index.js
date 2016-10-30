@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import RootApp from './components/app'
-import { AppContainer } from 'react-hot-loader'
+import RootApp from './containers/app'
 import createStore from './store'
 
-const MOUNT_NODE = document.getElementById('root')
 const initialState = window.___INITIAL_STATE__
 const store = createStore(initialState)
 
 ReactDOM.render(
-  <RootApp store={store} />,
-  MOUNT_NODE
+  <Provider store={store}>
+    <RootApp />
+  </Provider>,
+  document.getElementById('root')
 )
