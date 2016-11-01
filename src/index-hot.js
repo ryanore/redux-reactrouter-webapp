@@ -4,6 +4,7 @@ import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import createStore from './store'
 import RootApp from './containers/app'
+import {verifyUserToken} from './actions/a.auth'
 
 const initialState = window.___INITIAL_STATE__
 const store = createStore(initialState)

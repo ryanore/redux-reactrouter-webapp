@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Provider, connect} from 'react-redux'
 import {Router, Route, browserHistory, IndexRoute, Redirect} from 'react-router'
 import AppContainer from '../containers/app-container'
 import LogIn from './login'
-import CustomerDashboard from './customer-dashboard'
-import BrokerDashboard from './broker-dashboard'
+import DashboardContainer from './dashboard-container'
+import CustomerDashboard from './dashboard-customer'
+import BrokerDashboard from './dashboard-broker'
 
 import Page403 from '../components/page-403'
 import Page404 from '../components/page-404'
@@ -14,38 +15,55 @@ import DashboardFeedback from '../components/dashboard-feedback'
 import DashboardOverview from '../components/dashboard-overview'
 import DashboardModule from '../components/dashboard-module'
 
-const mapStateToProps = state => ({
-  auth: state.auth
-})
+import {verifyUserToken} from '../actions/a.auth'
 
-export default connect(mapStateToProps)( (props) => {
-  const loggedIn = props.loggedIn
-  const role = props.auth.user.role
+class App extends Component {
 
-  const checkAuth = () => (!loggedIn && browserHistory.push('/login'))
+  checkAuth(params){
+    if(!this.props.auth.loggedIn){
+      browserHistory.push({
+        pathname: '/login',
+        query: {
+          r: params.location.pathname
+        }
+      })
+    }
+  }
 
-  return(
-    <Router history={browserHistory}>
-      <Route path="/" component={AppContainer}>
-        <IndexRoute component={PageHome} />
-        <Route path="/login" component={LogIn} />
-        <Route path="/about" component={PageAbout} />
-        <Route path="/login" component={LogIn} />
-        <Route path="/403" component={Page403} />
+  componentWillMount() {
+    this.props.verifyUserToken()
+  }
 
-        {['customer', 'employee'].includes(role) &&
-          <Route path="/dashboard" component={CustomerDashboard} onEnter={checkAuth}>
+  render() {
+    if(!this.props.auth.tokenVerified) {
+      return <h1>Checking Token</h1>
+    }
+
+    return(
+      <Router history={browserHistory}>
+        <Route path="/" component={AppContainer}>
+          <IndexRoute component={PageHome} />
+          <Route path="/login" component={LogIn} />
+          <Route path="/about" component={PageAbout} />
+          <Route path="/login" component={LogIn} />
+          <Route path="/403" component={Page403} />
+
+          <Route path="/dashboard" component={DashboardContainer} onEnter={this.checkAuth.bind(this)}>
             <Route path="/dashboard/overview" component={DashboardOverview} />
             <Route path="/dashboard/feedback" component={DashboardFeedback} />
             <Route path="/dashboard/:module" component={DashboardModule} />
           </Route>
-        }
 
-        {['broker', 'partner'].includes(role) &&
-          <Route path="/dashboard" component={BrokerDashboard} onEnter={checkAuth} />
-        }
-        <Route path="*" component={Page404} />
-      </Route>
-    </Router>
-  )
+          <Route path="*" component={Page404} />
+        </Route>
+      </Router>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
 })
+export default connect(mapStateToProps, {
+  verifyUserToken
+})( App )

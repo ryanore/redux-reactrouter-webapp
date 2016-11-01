@@ -1,11 +1,12 @@
+/*Default configuration, in case nothing is passed in from server*/
 const env = process ? process.env : {
   NODE_ENV: 'development',
-  API_BASE: 'http://localhost:9999'
+  API_ROOT: 'http://localhost:9999'
 }
 
 const config = {
   development: {
-    api_base: env.api_base
+    API_ROOT: env.API_ROOT
   }
 }
 

@@ -4,12 +4,20 @@ import promise from 'redux-promise'
 import rootReducer from '../reducers';
 
 export default (initialState = {}) => {
-  const middleware = [thunk, promise]
+
+  let middlewares = [thunk, promise]
+
+  if( process.env.NODE_ENV != 'production') {
+    const createLogger = require(`redux-logger`);
+    const logger = createLogger();
+    middlewares.push(logger);
+  }
+
   const store = createStore(
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(...middleware)
+      applyMiddleware(...middlewares)
     )
   )
   return store
