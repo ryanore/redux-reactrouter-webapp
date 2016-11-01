@@ -45,7 +45,6 @@ class App extends Component {
           <IndexRoute component={PageHome} />
           <Route path="/login" component={LogIn} />
           <Route path="/about" component={PageAbout} />
-          <Route path="/login" component={LogIn} />
           <Route path="/403" component={Page403} />
 
           <Route path="/dashboard" component={DashboardContainer} onEnter={this.checkAuth.bind(this)}>
