@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 class CustomerDashboard extends Component {
   render(){
     return(
-      <div>Customer Dashboard</div>
+      <div>
+        Customer Dashboard
+        {this.props.children}
+      </div>
     )
   }
 }

@@ -7,13 +7,28 @@ class LogIn extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: 'firstemployee',
+      username: 'customer1',
       password: '123456'
     }
   }
 
+  componentWillMount() {
+    this.checkAuth(props)
+  }
+  componentWillReceiveProps(newProps) {
+    this.checkAuth(newProps)
+  }
+
   /**
-   * TODO: set query string to direct them back to intended location
+   * If the user is loggedIn, send them home
+   */
+  checkAuth(props) {
+    props.auth.loggedIn && props.router.push('/')
+  }
+
+  /**
+   * Dispatch login action,
+   * send the intended url for redirection once logged in
    */
   handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +42,7 @@ class LogIn extends Component {
         <form onSubmit={this.handleSubmit.bind(this)} >
           <input
             name="username"
-            onChange={(e) => this.setState({value: e.target.value})}
+            onChange={(e) => this.setState({username: e.target.value})}
             value={this.state.username}
           />
           <input
@@ -45,7 +60,7 @@ class LogIn extends Component {
 
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  auth: state.auth
 })
 
 export default connect(

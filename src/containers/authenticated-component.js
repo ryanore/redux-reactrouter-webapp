@@ -14,7 +14,12 @@ export default function(ComposedComponent) {
 
     checkAuth(props) {
       if(!props.auth.loggedIn) {
-        props.router.push('/login')
+        props.router.push({
+          pathname: '/login',
+          query: {
+            r: props.location.pathname
+          }
+        })
       }
     }
 
