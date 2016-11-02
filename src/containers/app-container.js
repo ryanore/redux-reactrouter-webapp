@@ -3,16 +3,23 @@ import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
 import Header from '../components/app-header'
 import Footer from '../components/app-footer'
+import {logInUser, logOutUser} from '../actions/a.auth'
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  auth: state.auth
 })
 
-export default connect(mapStateToProps)( (props) => {
-
+export default connect(mapStateToProps,{
+  logInUser,
+  logOutUser
+})( (props) => {
   return(
     <div className="app-container">
-      <Header user={props.user} />
+      <Header
+        loggedIn={props.auth.loggedIn}
+        logIn={props.logInUser}
+        logOut={props.logOutUser}
+      />
       {props.children}
       <Footer role={props.user}/>
     </div>

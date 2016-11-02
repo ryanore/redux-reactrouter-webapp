@@ -2,6 +2,7 @@ import {
   ACCESS_TOKEN_VERIFIED,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
+  LOGOUT_USER_SUCCESSFUL,
   LOGIN_USER_FAILURE
 } from '../actions/a.auth.js'
 
@@ -41,6 +42,10 @@ export default function AuthReducer(state = INITIAL_STATE, action) {
           tokenVerified: true
         }
       )
+
+    case LOGOUT_USER_SUCCESSFUL:
+      return Object.assign({}, INITIAL_STATE, {tokenVerified: true})
+
 
   }
   return state;

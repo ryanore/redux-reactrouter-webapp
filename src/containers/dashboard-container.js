@@ -6,7 +6,10 @@ import { connect } from 'react-redux'
 class DashboardContainer extends Component {
   render(){
     return(
-      <div>Dashboard</div>
+      <div>
+        Dashboard
+        {this.props.children}
+      </div>
     )
   }
 }

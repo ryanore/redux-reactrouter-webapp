@@ -15,7 +15,8 @@ const {API_ROOT}  = config;
  * Log Out
  * @return {[type]} [description]
  */
-export function logOutUser() {
+export function logOutUser(e) {
+  e && e.preventDefault();
   localStorage.removeItem('access_token');
   return {
     type: LOGOUT_USER_SUCCESSFUL
