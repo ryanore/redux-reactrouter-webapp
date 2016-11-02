@@ -41,7 +41,7 @@ class App extends Component {
 
           <Route path="/dashboard" component={AuthenticatedComponent(DashboardContainer)}>
             <IndexRoute component={DashboardOverview} />
-            {(!role  || ['broker', 'pargner'].includes(role)) &&
+            {(!role  || ['employee', 'customer'].includes(role)) &&
               <div>
                 <Route path="/dashboard/feedback" component={DashboardFeedback} />
                 <Route path="/dashboard/:module" component={DashboardModule} />

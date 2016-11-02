@@ -9,8 +9,8 @@ export default (props) => {
         <li><Link to="/about">About</Link></li>
         <li><Link to="/dashboard">Dashboard</Link></li>
         { props.loggedIn
-          ?   <a onClick={props.logOut}>Log Out</a>
-          :   <Link to="/login">Log In</Link>
+          ? <a onClick={props.logOut}>Log Out</a>
+          : <Link to="/login">Log In</Link>
         }
       </ul>
       <hr />
