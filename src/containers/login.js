@@ -13,7 +13,7 @@ class LogIn extends Component {
   }
 
   componentWillMount() {
-    this.checkAuth(props)
+    this.checkAuth(this.props)
   }
   componentWillReceiveProps(newProps) {
     this.checkAuth(newProps)
