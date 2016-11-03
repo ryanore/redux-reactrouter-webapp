@@ -1,29 +1,21 @@
 import React, {Component} from 'react'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
+import {intersects} from '../utils/array'
 import CustomerDashboard from './dashboard-customer'
 import BrokerDashboard from './dashboard-broker'
-import {intersects} from '../utils/array'
+import EmployeeHeader from './employee-header'
+import {fetchClientList, setClientKey} from '../actions/a.dashboard'
 
-/**
- * Router for Dashboard
- * - Confirm they're logged in or redirect to /login
- * - Confirm their role and serve the correct Dashboard compoennt
- */
+
 class DashboardContainer extends Component {
+
   componentWillMount() {
     this.checkAuth(this.props)
   }
 
-  shouldComponentUpdate(newProps) {
-    if (!this.checkAuth(newProps) ){
-      return false
-    }
-  }
 
   checkAuth(props) {
     const{auth, router, location} = props;
-
     if(!auth.loggedIn) {
       router.push({
         pathname: '/login',
@@ -33,28 +25,35 @@ class DashboardContainer extends Component {
       })
       return false
     }
-
-    if(intersects(auth.user.roles, ['customer', 'employee'])) {
-      this.Dashboard = CustomerDashboard;
-    }
-
-    else if(intersects(auth.user.roles, ['broker', 'partner'])) {
-      this.Dashboard = BrokerDashboard;
-    }
   }
+
+
+  userIs(role) {
+    if(!this.props.auth.user.roles){
+      return false
+    }
+    return intersects( this.props.auth.user.roles, [role])
+  }
+
 
   render(){
     return(
-      this.props.auth.loggedIn
-      ? <this.Dashboard {...this.props}/>
-      : null
+      <div>
+        {this.userIs('employee') &&
+          <EmployeeHeader {...this.props} />
+        }
+        {this.props.children}
+      </div>
     )
   }
 }
 
-
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  dashboard: state.dashboard
 })
 
-export default connect(mapStateToProps)(DashboardContainer);
+export default connect(mapStateToProps,{
+  fetchClientList,
+  setClientKey
+})(DashboardContainer);

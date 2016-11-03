@@ -1,3 +1,5 @@
+import {broker, employee, customer} from '../tmp/user'
+
 import {
   ACCESS_TOKEN_VERIFIED,
   LOGIN_USER_REQUEST,
@@ -15,6 +17,10 @@ const INITIAL_STATE = {
   tokenVerified: false
 }
 
+// Temp user data
+const tempUser = employee
+
+
 export default function AuthReducer(state = INITIAL_STATE, action) {
 
   switch(action.type) {
@@ -31,7 +37,8 @@ export default function AuthReducer(state = INITIAL_STATE, action) {
       return Object.assign({}, action.payload, {
           loggedIn: true,
           isAuthenticating: false,
-          tokenVerified: true
+          tokenVerified: true,
+          user: tempUser
         }
       )
 

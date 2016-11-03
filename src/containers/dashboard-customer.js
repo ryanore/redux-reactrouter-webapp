@@ -1,9 +1,14 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
+import {setClientKey} from '../actions/a.dashboard'
 
 
 class CustomerDashboard extends Component {
+  componentWillMount() {
+    this.props.setClientKey(this.props.params.key)
+  }
+
   render(){
     return(
       <div>
@@ -14,9 +19,10 @@ class CustomerDashboard extends Component {
   }
 }
 
-
 const mapStateToProps = state => ({
-  user: state.auth.user
+  dashboard: state.dashboard
 })
 
-export default connect(mapStateToProps)(CustomerDashboard);
+export default connect(mapStateToProps,{
+  setClientKey
+})(CustomerDashboard);
