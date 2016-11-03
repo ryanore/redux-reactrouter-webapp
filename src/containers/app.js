@@ -39,8 +39,11 @@ class App extends Component {
           <Route path="/about" component={PageAbout} />
           <Route path="/403" component={Page403} />
           <Route path="/dashboard" component={DashboardContainer}>
-            <Route path="feedback" component={DashboardFeedback}/>
-            <Route path=":name" component={DashboardModule}/>
+            <Route path=":key" component={CustomerDashboard}>
+              <Route path=":moduleName" component={DashboardModule}/>
+            </Route>
+            <Route path="partner/:key" component={BrokerDashboard} />
+            <Route path="broker/:key" component={BrokerDashboard} />
           </Route>
           <Route path="*" component={Page404} />
         </Route>
