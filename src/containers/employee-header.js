@@ -12,7 +12,9 @@ class EmployeeHeader extends Component {
    * User selected item from dropdown, Update the url
    */
   handleClientSelected(key) {
-    if( this.props.params.key !== key ){
+    const {params, router} = this.props
+
+    if( params.key !== key ){
       router.push({
         pathname: `/dashboard/${key}`
       })
@@ -21,8 +23,7 @@ class EmployeeHeader extends Component {
 
   render(){
     const {currentClient, clientList, onSelectClient } = this.props.dashboard;
-
-    if(!clientList) {
+    if(!currentClient || !clientList) {
       return <div>loading</div>
     }
 
