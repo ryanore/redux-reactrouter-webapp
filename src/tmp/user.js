@@ -27,6 +27,20 @@ export const broker = {
   "token": "J5ekTo_4rJSFifTvvhACi9_hXs4"
 }
 
+export const partner = {
+  "roles": ["partner"],
+  "attributes": {
+    "customerkey": "",
+    "partnerkey": ["one-PARTNER"],
+    "alexiqversion": ["basic"],
+    "alexiqprivilege": ["user"],
+    "alexiqaccess": ["readonly"],
+    "organizationname": ["Fidelity"],
+    "cn": ["Fidelity"]
+  },
+  "token": "J5ekTo_4rJSFifTvvhACi9_hXs4"
+}
+
 
 export const customer ={
   "roles": ["customer"],

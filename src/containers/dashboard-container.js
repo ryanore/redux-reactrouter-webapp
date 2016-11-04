@@ -13,43 +13,56 @@ class DashboardContainer extends Component {
     this.checkAuth(this.props)
   }
 
-
-  checkAuth(props) {
-    const{auth, router, location} = props;
-    if(!auth.loggedIn) {
-      router.push({
-        pathname: '/login',
-        query: {
-          r: location.pathname
-        }
-      })
-      return false
-    }
+  componentWillReceiveProps(newProps) {
+    this.checkAuth(newProps)
   }
 
+  checkAuth(props) {
+    const{auth, user, router, location} = props
 
-  userIs(role) {
-    if(!this.props.auth.user.roles){
-      return false
+    if(!auth.loggedIn) {
+      return router.push({
+        pathname: '/login',
+        query: { r: location.pathname }
+      })
     }
-    return intersects( this.props.auth.user.roles, [role])
+
+    if( user.key && location.pathname === '/dashboard' ){
+      router.push({
+        pathname: `/dashboard/${user.key}`
+      })
+    }
   }
 
 
   render(){
+    const role = this.props.user.role;
+
+    if(!role){
+      return <div>Loading userdata</div>
+    }
+
     return(
       <div>
-        {this.userIs('employee') &&
+        {role === 'employee' &&
           <EmployeeHeader {...this.props} />
         }
-        {this.props.children}
+        {(role === 'customer' || role === 'employee') &&
+          <CustomerDashboard {...this.props} />
+        }
+        {role === 'broker' &&
+          <BrokerDashboard {...this.props} />
+        }
       </div>
     )
   }
 }
 
+
+
 const mapStateToProps = state => ({
   auth: state.auth,
+  user: state.user,
   dashboard: state.dashboard
 })
 

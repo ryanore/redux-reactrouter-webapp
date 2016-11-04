@@ -1,5 +1,3 @@
-import {broker, employee, customer} from '../tmp/user'
-
 import {
   ACCESS_TOKEN_VERIFIED,
   LOGIN_USER_REQUEST,
@@ -8,17 +6,14 @@ import {
   LOGIN_USER_FAILURE
 } from '../actions/a.auth.js'
 
+
 const INITIAL_STATE = {
-  user: {},
   access_token: null,
   loggedIn: false,
   isAuthenticating: false,
   statusText: null,
   tokenVerified: false
 }
-
-// Temp user data
-const tempUser = employee
 
 
 export default function AuthReducer(state = INITIAL_STATE, action) {
@@ -37,8 +32,7 @@ export default function AuthReducer(state = INITIAL_STATE, action) {
       return Object.assign({}, action.payload, {
           loggedIn: true,
           isAuthenticating: false,
-          tokenVerified: true,
-          user: tempUser
+          tokenVerified: true
         }
       )
 

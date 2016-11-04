@@ -8,19 +8,24 @@ class EmployeeHeader extends Component {
     this.props.fetchClientList()
   }
 
+  /**
+   * User selected item from dropdown, Update the url
+   */
   handleClientSelected(key) {
     if( this.props.params.key !== key ){
-      this.props.setClientKey(key)
+      router.push({
+        pathname: `/dashboard/${key}`
+      })
     }
   }
 
   render(){
-
     const {currentClient, clientList, onSelectClient } = this.props.dashboard;
 
     if(!clientList) {
       return <div>loading</div>
     }
+
     return(
       <div>
         <select

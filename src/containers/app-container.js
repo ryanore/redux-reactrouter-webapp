@@ -6,7 +6,8 @@ import Footer from '../components/app-footer'
 import {logInUser, logOutUser} from '../actions/a.auth'
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  dashboard: state.dashboard
 })
 
 export default connect(mapStateToProps,{
@@ -19,6 +20,7 @@ export default connect(mapStateToProps,{
         loggedIn={props.auth.loggedIn}
         logIn={props.logInUser}
         logOut={props.logOutUser}
+        dashboard={props.dashboard.dashboardPath}
       />
       {props.children}
       <Footer role={props.user}/>

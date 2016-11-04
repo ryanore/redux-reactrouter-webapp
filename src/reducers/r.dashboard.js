@@ -5,14 +5,14 @@ import {
 
 const INITIAL_STATE = {
   clientList: [],
-  currentClient: ''
+  currentClient: null
 }
+
 
 export default function DashboardReducer(state = INITIAL_STATE, action) {
 
   switch(action.type) {
     case CLIENT_KEY_SET:
-      console.log('SET currentClient TO ', action.payload);
       return Object.assign({}, state, {
         currentClient: action.payload
       })
