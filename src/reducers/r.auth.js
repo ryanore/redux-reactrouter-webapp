@@ -6,14 +6,15 @@ import {
   LOGIN_USER_FAILURE
 } from '../actions/a.auth.js'
 
+
 const INITIAL_STATE = {
-  user: {},
   access_token: null,
   loggedIn: false,
   isAuthenticating: false,
   statusText: null,
   tokenVerified: false
 }
+
 
 export default function AuthReducer(state = INITIAL_STATE, action) {
 

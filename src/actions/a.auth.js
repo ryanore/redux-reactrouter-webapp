@@ -7,45 +7,20 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGOUT_USER_SUCCESSFUL = 'LOGOUT_USER_SUCCESSFUL'
 
-const {API_ROOT}  = config;
-
-
+const {API_ROOT}  = config
 
 /**
  * Log Out
  * @return {[type]} [description]
  */
 export function logOutUser(e) {
-  e && e.preventDefault();
-  localStorage.removeItem('access_token');
+  e && e.preventDefault()
+  localStorage.removeItem('access_token')
+  browserHistory.push('/')
   return {
     type: LOGOUT_USER_SUCCESSFUL
-  };
-}
-
-/**
- * Login form submitted
- * @param  {String} un username
- * @param  {String} pw password
- * @param  {String}  redirect = "/" Optionally redirect to specific url
- * @return {Promise}
- */
-export function logInUser(un, pw, redirect) {
-  const data = {username: un, password: pw}
-
-  return (dispatch) => {
-    dispatch(loginUserRequest())
-
-    axios.post(`${API_ROOT}/session/`, data)
-    .then( res => {
-      dispatch(loginUserSuccess(res.data, redirect))
-    })
-    .catch( ex => {
-      dispatch(loginUserFailure(ex))
-    })
   }
 }
-
 
 
 /**
@@ -57,6 +32,10 @@ export function loginUserRequest() {
     type: LOGIN_USER_REQUEST
   }
 }
+
+/********************/
+/*      THUNKS   */
+/********************/
 
 
 /**
@@ -72,8 +51,8 @@ export function loginUserSuccess(data, redirect='/') {
 
   localStorage.setItem('access_token', token)
   setTimeout(()=> {
-    browserHistory.push(redirect);
-  }, 10);
+    browserHistory.push(redirect)
+  }, 10)
 
   return {
     type: LOGIN_USER_SUCCESS,
@@ -108,7 +87,7 @@ export function loginUserFailure(error) {
 */
 export function verifyUserToken() {
   const redirect = browserHistory.getCurrentLocation().pathname
-  const access_token = localStorage.getItem('access_token');
+  const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
     if (!access_token) {
@@ -128,5 +107,29 @@ export function verifyUserToken() {
       .catch( res=> {
         return dispatch( loginUserFailure(res))
       })
-  };
+  }
+}
+
+
+/**
+ * Login form submitted
+ * @param  {String} un username
+ * @param  {String} pw password
+ * @param  {String}  redirect = "/" Optionally redirect to specific url
+ * @return {Promise}
+ */
+export function logInUser(un, pw, redirect) {
+  const data = {username: un, password: pw}
+
+  return (dispatch) => {
+    dispatch(loginUserRequest())
+
+    axios.post(`${API_ROOT}/session/`, data)
+    .then( res => {
+      dispatch(loginUserSuccess(res.data, redirect))
+    })
+    .catch( ex => {
+      dispatch(loginUserFailure(ex))
+    })
+  }
 }

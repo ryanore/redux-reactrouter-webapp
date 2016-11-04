@@ -17,4 +17,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 })
 
-export default connect(mapStateToProps)(BrokerDashboard);
+export default connect(mapStateToProps)(BrokerDashboard)

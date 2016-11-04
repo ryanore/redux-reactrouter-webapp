@@ -1,60 +1,72 @@
 import React, {Component} from 'react'
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
+import {intersects} from '../utils/array'
 import CustomerDashboard from './dashboard-customer'
 import BrokerDashboard from './dashboard-broker'
-import {intersects} from '../utils/array'
+import EmployeeHeader from './employee-header'
+import {fetchClientList, setClientKey} from '../actions/a.dashboard'
 
-/**
- * Router for Dashboard
- * - Confirm they're logged in or redirect to /login
- * - Confirm their role and serve the correct Dashboard compoennt
- */
+
 class DashboardContainer extends Component {
+
   componentWillMount() {
     this.checkAuth(this.props)
   }
 
-  shouldComponentUpdate(newProps) {
-    if (!this.checkAuth(newProps) ){
-      return false
-    }
+  componentWillReceiveProps(newProps) {
+    this.checkAuth(newProps)
   }
 
   checkAuth(props) {
-    const{auth, router, location} = props;
+    const{auth, user, router, location} = props
 
     if(!auth.loggedIn) {
-      router.push({
+      return router.push({
         pathname: '/login',
-        query: {
-          r: location.pathname
-        }
+        query: { r: location.pathname }
       })
-      return false
     }
 
-    if(intersects(auth.user.roles, ['customer', 'employee'])) {
-      this.Dashboard = CustomerDashboard;
-    }
-
-    else if(intersects(auth.user.roles, ['broker', 'partner'])) {
-      this.Dashboard = BrokerDashboard;
+    if( user.key && location.pathname === '/dashboard' ){
+      router.push({
+        pathname: `/dashboard/${user.key}`
+      })
     }
   }
 
+
   render(){
+    const role = this.props.user.role;
+
+    if(!role){
+      return <div>Loading userdata</div>
+    }
+
     return(
-      this.props.auth.loggedIn
-      ? <this.Dashboard {...this.props}/>
-      : null
+      <div>
+        {role === 'employee' &&
+          <EmployeeHeader {...this.props} />
+        }
+        {(role === 'customer' || role === 'employee') &&
+          <CustomerDashboard {...this.props} />
+        }
+        {role === 'broker' &&
+          <BrokerDashboard {...this.props} />
+        }
+      </div>
     )
   }
 }
 
 
+
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  user: state.user,
+  dashboard: state.dashboard
 })
 
-export default connect(mapStateToProps)(DashboardContainer);
+export default connect(mapStateToProps,{
+  fetchClientList,
+  setClientKey
+})(DashboardContainer);
