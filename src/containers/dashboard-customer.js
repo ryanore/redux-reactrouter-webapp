@@ -3,18 +3,16 @@ import { browserHistory, Link } from 'react-router'
 import { connect } from 'react-redux'
 import {setClientKey} from '../actions/a.dashboard'
 import {relativePath} from '../utils/url'
-
+let count = 0;
 class CustomerDashboard extends Component {
 
   componentWillReceiveProps(newProps) {
     const {dashboard, params, user} = this.props;
-    if( !dashboard.currentClient ) {
-      if(user.role === 'employee') {
-        this.props.setClientKey(params.key)
-      }
-      else if(user.role === 'customer') {
-        this.props.setClientKey(user.key)
-      }
+
+    let key = user.role === 'employee' ? params.key  : user.key
+
+    if( !dashboard.currentClient && key) {
+      this.props.setClientKey(key)
     }
   }
 
@@ -24,7 +22,6 @@ class CustomerDashboard extends Component {
 
     return(
       <div>
-         {user.cn} <br />
        Customer Dashboard
         <ul>
           <li><Link to={`${path}`} >Overview</Link></li>

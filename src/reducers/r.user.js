@@ -9,12 +9,11 @@ import {
 } from '../actions/a.auth.js'
 
 
-const TEMP_USER = customer
+const TEMP_USER = employee
 
 const INITIAL_STATE = {}
 
 const getUser = (u) => {
-  console.log('getuser ', u);
   let a = u.attributes
   let user = {
     alexiqversion: a.alexiqversion[0],
@@ -28,7 +27,7 @@ const getUser = (u) => {
       return {
         ...user,
         role: 'employee',
-        key: null
+        key: 'employee'
       }
     case 'customer':
       return {

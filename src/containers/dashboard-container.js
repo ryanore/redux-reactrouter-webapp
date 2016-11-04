@@ -17,6 +17,11 @@ class DashboardContainer extends Component {
     this.checkAuth(newProps)
   }
 
+  /**
+   * Make sure they're logged in or send them to /login
+   * If they are on /dashboard redirect them to the correct path.
+   * Nobody should be only on /dashboard
+   */
   checkAuth(props) {
     const{auth, user, router, location} = props
 
