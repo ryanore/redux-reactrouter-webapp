@@ -10,11 +10,11 @@ export default function() {
 
   const orgError = console.error
   console.error = (...args) => {
-    if (args && args.length === 1 && isString(args[0]) && args[0].indexOf('You cannot change <Router routes>;') > -1) {
+    if (args && args.length === 1 && isString(args[0]) && args[0].indexOf('You cannot change <Router routes>') > -1) {
       // React route changed
     } else {
-      orgError.apply(console, args);
+      orgError.apply(console, args)
     }
-  };
+  }
 
 }

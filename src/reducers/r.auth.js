@@ -18,36 +18,35 @@ const INITIAL_STATE = {
 
 export default function AuthReducer(state = INITIAL_STATE, action) {
 
-  switch(action.type) {
+  switch (action.type) {
 
     case LOGIN_USER_REQUEST:
-      return Object.assign({}, state,{
-          loggedIn: false,
-          isAuthenticating: true,
-          tokenVerified: true
-        }
-      )
+      return Object.assign({}, state, {
+        loggedIn: false,
+        isAuthenticating: true,
+        tokenVerified: true
+      })
 
     case LOGIN_USER_SUCCESS:
       return Object.assign({}, action.payload, {
-          loggedIn: true,
-          isAuthenticating: false,
-          tokenVerified: true
-        }
-      )
+        loggedIn: true,
+        isAuthenticating: false,
+        tokenVerified: true
+      })
 
     case LOGIN_USER_FAILURE:
-      return Object.assign({}, state,{
-          loggedIn: false,
-          isAuthenticating: false,
-          tokenVerified: true
-        }
-      )
+      return Object.assign({}, state, {
+        loggedIn: false,
+        isAuthenticating: false,
+        tokenVerified: true
+      })
 
     case LOGOUT_USER_SUCCESSFUL:
-      return Object.assign({}, INITIAL_STATE, {tokenVerified: true})
+      return Object.assign({}, INITIAL_STATE, {
+        tokenVerified: true
+      })
 
 
   }
-  return state;
+  return state
 }

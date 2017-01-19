@@ -16,7 +16,21 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
-    })
+    }),
+    new webpack.optimize.DedupePlugin(),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false,
+				unsafe: true,
+				screw_ie8: true
+			},
+			mangle: {
+				screw_ie8: true
+			},
+			output: {
+				comments: false
+			}
+		})
   ],
   module: {
     loaders: [{

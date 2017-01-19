@@ -34,7 +34,7 @@ const getUser = (u) => {
         ...user,
         role: 'customer',
         key: a.customerkey[0]
-    }
+      }
     case 'broker':
     case 'partner':
       return {
@@ -50,8 +50,7 @@ const getUser = (u) => {
 export default function AuthReducer(state = INITIAL_STATE, action) {
   switch(action.type) {
     case LOGIN_USER_SUCCESS:
-      const user = TEMP_USER //action.payload.user
-      return getUser(user)
+      return getUser(TEMP_USER)
 
     case LOGIN_USER_FAILURE:
       return INITIAL_STATE
