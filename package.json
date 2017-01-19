@@ -8,7 +8,7 @@
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register  --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch",
-    "build": "NODE_ENV=production webpack src/index.js --config webpack.config.production.js",
+    "build": "NODE_ENV=production webpack -p src/index.js --config webpack.production.config.js",
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test",
     "updates": "npm-check-updates",

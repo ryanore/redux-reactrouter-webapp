@@ -22,5 +22,5 @@ export default function DashboardReducer(state = INITIAL_STATE, action) {
         clientList: action.payload
       })
   }
-  return state;
+  return state
 }

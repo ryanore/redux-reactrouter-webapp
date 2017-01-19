@@ -3,11 +3,11 @@ import { browserHistory, Link } from 'react-router'
 import { connect } from 'react-redux'
 import {setClientKey} from '../actions/a.dashboard'
 import {relativePath} from '../utils/url'
-let count = 0;
+let count = 0
 class CustomerDashboard extends Component {
 
   componentWillReceiveProps(newProps) {
-    const {dashboard, params, user} = this.props;
+    const {dashboard, params, user} = this.props
 
     let key = user.role === 'employee' ? params.key  : user.key
 
@@ -42,4 +42,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps,{
   setClientKey
-})(CustomerDashboard);
+})(CustomerDashboard)

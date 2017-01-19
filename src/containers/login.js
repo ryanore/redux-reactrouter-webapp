@@ -31,8 +31,8 @@ class LogIn extends Component {
    * send the intended url for redirection once logged in
    */
   handleSubmit(e) {
-    e.preventDefault();
-    const redirect = this.props.router.location.query.r;
+    e.preventDefault()
+    const redirect = this.props.router.location.query.r
     this.props.logInUser(this.state.username, this.state.password, redirect)
   }
 

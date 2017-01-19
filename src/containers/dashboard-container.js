@@ -41,7 +41,7 @@ class DashboardContainer extends Component {
 
 
   render(){
-    const role = this.props.user.role;
+    const role = this.props.user.role
 
     if(!role){
       return <div>Loading userdata</div>
@@ -74,4 +74,4 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps,{
   fetchClientList,
   setClientKey
-})(DashboardContainer);
+})(DashboardContainer)

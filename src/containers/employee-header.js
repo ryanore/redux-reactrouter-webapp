@@ -22,7 +22,7 @@ class EmployeeHeader extends Component {
   }
 
   render(){
-    const {currentClient, clientList, onSelectClient } = this.props.dashboard;
+    const {currentClient, clientList, onSelectClient } = this.props.dashboard
     if(!currentClient || !clientList) {
       return <div>loading</div>
     }

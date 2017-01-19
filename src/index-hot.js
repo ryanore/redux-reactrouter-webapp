@@ -1,3 +1,5 @@
+/* global module, require */
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -26,16 +28,16 @@ if(module.hot) {
   require('./utils/react-router-error-suppress').default()
 
   // enable hot-reloader on app
-  module.hot.accept("./containers/app", () => {
-    const NextApp = require("./containers/app").default
+  module.hot.accept('./containers/app', () => {
+    const NextApp = require('./containers/app').default
     renderApp(NextApp)
-  });
+  })
 
   // enable hot-reloading on store
   module.hot.accept('./reducers', () => {
-    const nextRootReducer = require('./reducers').default;
-    store.replaceReducer(nextRootReducer);
+    const nextRootReducer = require('./reducers').default
+    store.replaceReducer(nextRootReducer)
   })
 }
 
-renderApp(RootApp);
+renderApp(RootApp)
